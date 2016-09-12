@@ -18,6 +18,7 @@ namespace Use_Case_helper
         Point drawPositionStart;
         Point drawPositionEnd;
         private Element selectedElement;
+        UseCaseProperties useCasePropertiesForm;
 
         //constructor
         public frmMain()
@@ -76,6 +77,31 @@ namespace Use_Case_helper
         private void resetPanel()
         {
             pnlDrawSpace.Invalidate();
+        }
+        public void updateSelectedUseCase(List<string> inputList)
+        {
+            if (selectedElement.Type == "UseCase")
+            {
+                /*
+                inputlist:
+                returnList.Add(name);
+                returnList.Add(summary);
+                returnList.Add(actors);
+                returnList.Add(assumptions);
+                returnList.Add(description);
+                returnList.Add(exceptions);
+                returnList.Add(result);
+                 */
+                UseCase selectedUseCase = (UseCase)selectedElement;
+                selectedUseCase.Name = inputList[0];
+                selectedUseCase.Summary = inputList[1];
+                selectedUseCase.Actors = inputList[2];
+                selectedUseCase.Assumptions = inputList[3];
+                selectedUseCase.Description = inputList[4];
+                selectedUseCase.Exceptions = inputList[5];
+                selectedUseCase.Result = inputList[6];
+                resetPanel();
+            }
         }
 
         //windows-methods
@@ -279,6 +305,16 @@ namespace Use_Case_helper
                     lbExistingSymbols.Items.Add(element);
                 }
                 resetPanel();
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (selectedElement.Type == "UseCase")
+            {
+                UseCase selectedUseCase = (UseCase)selectedElement;
+                useCasePropertiesForm = new UseCaseProperties(selectedUseCase.getProperties(), this);
+                useCasePropertiesForm.Show();
             }
         }
     }
